@@ -1,3 +1,7 @@
 {
-  "version": "${project.version}"
+  "directory": "${project.build.directory}",
+  "outputDirectory": "${project.build.outputDirectory}",
+  "name": "${project.name}",
+  "version": "${project.version}",
+  "finalName": "${project.build.finalName}"
 }
