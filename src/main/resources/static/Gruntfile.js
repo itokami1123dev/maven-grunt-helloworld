@@ -3,6 +3,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         gruntMavenProperties: grunt.file.readJSON('grunt-maven.json'),
+        mvnProp: grunt.file.readJSON('maven-properties.json'),
         mavenPrepare: {
             options: {
                 resources: ['**']
@@ -16,16 +17,37 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            js: [
-                "js/**/*.js",
-                "!js/**/*.min.js"
-            ]
+            before: {
+                options: {
+                    force: true
+                },
+                files: {
+                    src: [
+                        "js/**/*.js"
+                    ]
+                }
+            },
+            after: {
+                options: {
+                    force: true
+                },
+                files: {
+                    src: [
+                        "<%= mvnProp.outputDirectory %>/static/Gruntfile.js",
+                        "<%= mvnProp.outputDirectory %>/static/package.json",
+                        "<%= mvnProp.outputDirectory %>/static/maven-properties.json",
+                        "<%= mvnProp.outputDirectory %>/static/js/**/*.js"
+                    ]
+
+                }
+            }
         },
         mavenDist: {
             options: {
                 warName: "classes",
                 deliverables: ["js/**/*.min.js"]
-            },
+            }
+            ,
             dev: {}
         }
     });
@@ -34,5 +56,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    grunt.registerTask('default', ['mavenPrepare', 'concat', 'mavenDist', 'clean']);
-};
+    grunt.registerTask('beforeClean', ['clean:before']);
+
+    grunt.registerTask('default', ['mavenPrepare', 'concat', 'clean:after', 'mavenDist']);
+}
+;

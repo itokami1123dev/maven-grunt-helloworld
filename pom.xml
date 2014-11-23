@@ -54,6 +54,21 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>gruntInit</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <gruntOptions>
+                                <gruntOption>beforeClean</gruntOption>
+                            </gruntOptions>
+                        </configuration>
+                        <goals>
+                            <goal>npm</goal>
+                            <goal>grunt</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>gruntCompile</id>
                         <goals>
                             <goal>create-resources</goal>
                             <goal>npm</goal>
