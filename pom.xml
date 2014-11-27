@@ -62,6 +62,7 @@
                             </gruntOptions>
                         </configuration>
                         <goals>
+                            <goal>create-resources</goal>
                             <goal>npm</goal>
                             <goal>grunt</goal>
                         </goals>
