@@ -13,7 +13,17 @@ module.exports = function (grunt) {
         concat: {
             files: {
                 src: ['js/src/namespace.js', 'js/src/**/*.js', 'js/src/main.js'],
-                dest: 'js/app.min.js'
+                dest: 'js/app.js'
+            }
+        },
+        babel: {
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    "js/app.min.js": "js/app.js"
+                }
             }
         },
         clean: {
@@ -33,10 +43,10 @@ module.exports = function (grunt) {
                 },
                 files: {
                     src: [
-                        "<%= mvnProp.outputDirectory %>/static/Gruntfile.js",
-                        "<%= mvnProp.outputDirectory %>/static/package.json",
-                        "<%= mvnProp.outputDirectory %>/static/maven-properties.json",
-                        "<%= mvnProp.outputDirectory %>/static/js/**/*.js"
+                        "<%= mvnProp.outputDirectory %>/Gruntfile.js",
+                        "<%= mvnProp.outputDirectory %>/package.json",
+                        "<%= mvnProp.outputDirectory %>/maven-properties.json",
+                        "<%= mvnProp.outputDirectory %>/js/srv/*.js"
                     ]
 
                 }
@@ -55,9 +65,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-maven');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-babel');
 
     grunt.registerTask('beforeClean', ['clean:before']);
 
-    grunt.registerTask('default', ['mavenPrepare', 'concat', 'clean:after', 'mavenDist']);
+    grunt.registerTask('default', ['mavenPrepare', 'concat', 'babel', 'clean:after', 'mavenDist']);
 }
 ;
