@@ -1,10 +1,9 @@
-(function (ns) {
-    "use strict";
+import "babelify/polyfill"; // Needed for Babel's experimental features.
 
-    var init = function () {
-        var doramon = new ns.robo.Doramon("js-dramon");
-        doramon.say("hello nobicho!");
-    };
+import App from './components/App.jsx';
 
-    document.addEventListener("DOMContentLoaded", init, false);
-})(robonyan);
+React.render(
+    <App />,
+    document.getElementById('container')
+);
+
