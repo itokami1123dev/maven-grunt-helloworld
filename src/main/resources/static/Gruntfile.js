@@ -22,7 +22,17 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    "js/app.min.js": "js/app.js"
+                    "js/app.min.js": "js/src/main.js"
+                }
+            }
+        },
+        browserify: {
+            dist: {
+                options: {
+                    transform: [["babelify", {"stage": 0}]]
+                },
+                files: {
+                    "js/build/main.min.js": "js/src/main.js"
                 }
             }
         },
@@ -65,10 +75,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-maven');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('babelify');
 
     grunt.registerTask('beforeClean', ['clean:before']);
 
-    grunt.registerTask('default', ['mavenPrepare', 'concat', 'babel', 'clean:after', 'mavenDist']);
+//    grunt.registerTask('default', ['mavenPrepare', 'concat', 'babel', 'clean:after', 'mavenDist']);
+    grunt.registerTask('default', ['mavenPrepare', 'browserify', 'clean:after', 'mavenDist']);
 }
 ;
